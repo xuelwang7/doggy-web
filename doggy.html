@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可以做我的小狗吗？</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFE5EC 0%, #FFC9DE 100%);
+            background-image: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30,40 Q30,30 40,30 L60,30 Q70,30 70,40 L70,60 Q70,70 60,70 L40,70 Q30,70 30,60 Z" fill="none" stroke="%23FFB6D9" stroke-width="2" opacity="0.15"/><circle cx="40" cy="45" r="2" fill="%23FFB6D9" opacity="0.2"/><circle cx="60" cy="45" r="2" fill="%23FFB6D9" opacity="0.2"/><path d="M45,55 Q50,60 55,55" fill="none" stroke="%23FFB6D9" stroke-width="2" opacity="0.2"/></svg>'),
+                linear-gradient(135deg, #FFE5EC 0%, #FFC9DE 100%);
+            background-size: 80px 80px, cover;
+            background-repeat: repeat, no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 182, 217, 0.4);
+            max-width: 600px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #FF69B4;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(255, 182, 217, 0.3);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        button {
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #FF69B4, #FF1493);
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #FFB6D9, #FFA5C6);
+            color: white;
+        }
+
+        #noBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 182, 217, 0.4);
+        }
+
+        .success-message {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .success-message h2 {
+            font-size: 2.5em;
+            color: #FF1493;
+            font-weight: bold;
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .dog-images {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .dog-images img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            animation: slideIn 0.8s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .links {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #FFB6D9;
+        }
+
+        .links h3 {
+            color: #FF69B4;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .link-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .link-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #FFE5EC, #FFC9DE);
+            color: #FF1493;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .link-container a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            background: linear-gradient(135deg, #FFC9DE, #FFB6D9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐕 可以做我的小狗吗？🐕</h1>
+        
+        <div class="buttons" id="mainButtons">
+            <button id="yesBtn">Yes ❤️</button>
+            <button id="noBtn">No 💔</button>
+        </div>
+
+        <div class="success-message" id="successMsg">
+            <h2>🎉 你是我的小狗啦！🎉</h2>
+            <div class="dog-images">
+                <img src="picture/1.jpg" alt="开心的小狗">
+                <img src="/picture/2.jpg" alt="可爱的小狗">
+            </div>
+        </div>
+
+        <div class="links">
+            <h3>💕 推荐阅读 💕</h3>
+            <div class="link-container">
+                <a href="https://www.psychologytoday.com/us/blog/the-mysteries-love" target="_blank">情侣相处之道</a>
+                <a href="https://www.akc.org/dog-breeds/maltese/" target="_blank">马尔济斯犬知识</a>
+                <a href="https://www.thesprucepets.com/how-to-strengthen-your-relationship-1616852" target="_blank">增进感情技巧</a>
+                <a href="https://www.vetstreet.com/dogs/maltese" target="_blank">如何照顾小狗</a>
+                <a href="https://www.gottman.com/blog/the-magic-relationship-ratio-according-science/" target="_blank">恋爱心理学</a>
+                <a href="https://www.cesarsway.com/dog-training/" target="_blank">小狗训练指南</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainButtons = document.getElementById('mainButtons');
+        const successMsg = document.getElementById('successMsg');
+
+        let yesFontSize = 1.5;
+        let noFontSize = 1.5;
+        let yesPadding = 20;
+        let noPadding = 20;
+
+        // 点击 Yes 显示成功消息和图片
+        yesBtn.addEventListener('click', () => {
+            mainButtons.style.display = 'none';
+            successMsg.style.display = 'flex';
+        });
+
+        // 点击 No 改变按钮大小
+        noBtn.addEventListener('click', () => {
+            // 增大 Yes 按钮
+            yesFontSize += 0.3;
+            yesPadding += 5;
+            yesBtn.style.fontSize = yesFontSize + 'em';
+            yesBtn.style.padding = yesPadding + 'px ' + (yesPadding * 2.5) + 'px';
+
+            // 缩小 No 按钮
+            noFontSize -= 0.15;
+            noPadding -= 2;
+            
+            // 设置最小尺寸
+            if (noFontSize < 0.5) noFontSize = 0.5;
+            if (noPadding < 5) noPadding = 5;
+            
+            noBtn.style.fontSize = noFontSize + 'em';
+            noBtn.style.padding = noPadding + 'px ' + (noPadding * 2.5) + 'px';
+        });
+    </script>
+</body>
+</html>
